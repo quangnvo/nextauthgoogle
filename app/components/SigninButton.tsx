@@ -2,6 +2,9 @@
 
 import { useSession } from 'next-auth/react'
 import { signOut, signIn } from "next-auth/react"
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 
 const SigninButton = () => {
 
@@ -9,19 +12,25 @@ const SigninButton = () => {
 
     if (session && session.user) {
         return (
-            <div>
-                <p>{session.user.name}</p>
-                <button onClick={() => signOut()}>
+            <div className='flex flex-col justify-center items-center gap-4'>
+                <div className='flex justify-between items-center gap-3'>
+                    <p>{session.user.name}</p>
+                    <Avatar>
+                        <AvatarImage src={session.user.image ?? ""} />
+                        <AvatarFallback>{session.user.name}</AvatarFallback>
+                    </Avatar>
+                </div>
+                <Button onClick={() => signOut()}>
                     Sign Out
-                </button>
+                </Button>
             </div>
         )
     }
 
     return (
-        <button onClick={() => signIn()}>
+        <Button onClick={() => signIn()}>
             Sign In
-        </button >
+        </Button >
     )
 }
 
